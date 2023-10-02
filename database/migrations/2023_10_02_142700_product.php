@@ -13,9 +13,10 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('category_id')->unsigned();
             $table->string('product_name');
-            $table->string('description');
+            $table->text('description');
             $table->bigInteger('price')->unsigned();
             $table->bigInteger('stock')->unsigned();
+			$table->timestamps();
 			$table->softDeletes();
 
         });
