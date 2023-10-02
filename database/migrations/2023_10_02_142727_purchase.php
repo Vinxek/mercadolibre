@@ -12,10 +12,11 @@ return new class extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('product_id')->unsigned();
-            $table->bigInteger('category_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->dateTime('purchase_date');
             $table->bigInteger('quantity');
             $table->bigInteger('total_price')->unsigned();
+			$table->softDeletes();
         });
     }
 

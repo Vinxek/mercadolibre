@@ -6,11 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
+
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
@@ -22,6 +19,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->dateTime('birth_date');
             $table->string('phone_number');
+			$table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
