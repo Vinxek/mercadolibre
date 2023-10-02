@@ -1,0 +1,48 @@
+Requerimientos funcionales.
+
+Vistas
+Home
+Login page
+Categories
+Product
+Shopping cart
+
+Home
+Login page
+search bar (name)
+
+Categories
+5 categories
+
+Product
+show product
+description
+price
+available stock
+do not show if stock is 0
+
+Shopping-cart
+Add all products
+Add a counter for repeated products
+Show total amount to pay
+
+carrito
+total productos sumatoria de products
+sumaria los mis productos
+
+management system
+
+Users
+-data (id/full_name/role/email/)
+-avatar
+-roles (usar/admin)
+-user crud (view/edit/delete)
+
+products
+-data (id,name,descrip,price,stock,image)
+-products crud (view/edit/delete)
+
+categories
+-data (id,name)
+-categories crud
+-categories crud (view/edit/delete)
