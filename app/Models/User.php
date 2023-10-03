@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Purchase;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -21,7 +20,6 @@ class User extends Authenticatable
         'password',
         'name',
         'last_name',
-        'birth_date',
         'phone_number',
     ];
 
