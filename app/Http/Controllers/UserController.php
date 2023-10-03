@@ -32,9 +32,10 @@ class UserController extends Controller
     }
 
 
-    public function show($id)
+    public function show(Request $request, User $user)
     {
-        //
+        if(!$request->ajax()) return view('user.index', compact('users'));
+		return response()->json(['users' => $user	], 200);
     }
 
 

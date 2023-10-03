@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-
 use App\Models\Purchase;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -32,6 +31,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+	public function setPasswordAttribute($value){
+		$this->attributes['password'] = bcrypt($value); // this line of code takes the password and encrypts it using bcrypt
+	}
 
 	public function userPurchases()
 	{
