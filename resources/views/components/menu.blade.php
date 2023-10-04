@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light navbar-custom shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light custom-yellow shadow-sm">
     <div class="container">
         <div class="image-container"><img
                 src="https://seeklogo.com/images/M/mercado-libre-logo-058319A524-seeklogo.com.png" alt="logo"></div>
@@ -42,7 +42,7 @@
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            Hello, {{ Auth::user()->user_name }}
+                            <strong>Hello, {{ Auth::user()->user_name }}</strong>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
