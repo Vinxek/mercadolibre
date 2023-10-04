@@ -12,15 +12,15 @@ class UserController extends Controller
     public function index(Request $request)
     {
 		$users = User::get();
-        if(!$request->ajax()) return view('user.index', compact('users'));
+        if(!$request->ajax()) return view('users.index', compact('users'));
 		return response()->json(['users' => $users	], 200);
     }
 
 
     public function create()
     {
-        //
-    }
+        return view('users.create');
+	}
 
 
     public function store(UserRequest $request)

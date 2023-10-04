@@ -1,6 +1,7 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light navbar-custom shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">{{ env('APP_NAME') }}</a>
+        <div class="image-container"><img
+                src="https://seeklogo.com/images/M/mercado-libre-logo-058319A524-seeklogo.com.png" alt="logo"></div>
 
         {{-- Haburguesa --}}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -18,7 +19,6 @@
             <form class="d-flex justify-content-between col-sm-6">
                 <input class="form-control flex-grow-1 me-2 custom-search-input" type="search"
                     placeholder="Search Products" aria-label="Search">
-                <button class="btn btn-info"type="submit">Search</button>
             </form>
 
             <!-- Right Side Of Navbar -->

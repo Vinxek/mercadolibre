@@ -22,15 +22,21 @@ class User extends Authenticatable
         'phone_number',
     ];
 
+	protected $appends = ['full_name'];
 
     protected $hidden = [
         // 'password',
         'remember_token',
     ];
 
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+	public function getFullNameAttribute(){
+		return "{$this->name} {$this->last_name}";  //This line of code brings the two attribues of the model together once is called.
+	}
 
 	public function setPasswordAttribute($value){
 		$this->attributes['password'] = bcrypt($value); // this line of code takes the password and encrypts it using bcrypt
