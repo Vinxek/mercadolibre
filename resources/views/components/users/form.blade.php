@@ -58,6 +58,27 @@
             </span>
         @enderror
     </div>
+
+    {{-- User Name --}}
+    <div class="mb-3 col-12">
+
+        <label for="role">Role</label>
+
+        <select id="role" type="text" name="role" class="form-control @error('role') is-invalid @enderror">
+            @foreach ($roles as $role)
+                <option value="{{ $role }}">{{ $role }}</option>
+            @endforeach
+        </select>
+
+
+
+        @error('role')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
+
     {{-- password --}}
     <div class="mb-3 col-12">
         <label for="password">Password</label>

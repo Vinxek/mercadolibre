@@ -36,7 +36,7 @@
                                     <td>
                                         <p class="fw-normal mb-1">{{ $user->phone_number }}</p>
                                     </td>
-                                    <td>N/A</td>
+                                    <td>{{ $user->roles[0]->name }}</td>
                                     <td>
                                         <div class="d-flex">
                                             <a href="{{ route('users.edit', ['user' => $user->id]) }}"

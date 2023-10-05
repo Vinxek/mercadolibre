@@ -1,7 +1,11 @@
 <nav class="navbar navbar-expand-md navbar-light custom-yellow shadow-sm">
     <div class="container">
-        <div class="image-container"><img
-                src="https://seeklogo.com/images/M/mercado-libre-logo-058319A524-seeklogo.com.png" alt="logo"></div>
+        <a href="/">
+            <div class="image-container"><img
+                    src="https://seeklogo.com/images/M/mercado-libre-logo-058319A524-seeklogo.com.png" alt="logo"
+                    style="max-width: 150px;">
+            </div>
+        </a>
 
         {{-- Haburguesa --}}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -52,8 +56,12 @@
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 Logout
                             </a>
-
-
+                            @role('admin')
+                                {{-- users --}}
+                                <a class="dropdown-item" href="{{ route('users.index') }}">
+                                    users
+                                </a>
+                            @endrole
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>

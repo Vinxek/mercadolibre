@@ -12,7 +12,7 @@ class AdminSeeder extends Seeder
 
     public function run()
     {
-        User::create([
+        $user = new User([
 			'user_name' => 'Vinxek',
 			'email'=> 'vinxek@me.com',
 			'name' => 'Kevin',
@@ -21,5 +21,7 @@ class AdminSeeder extends Seeder
 			'password' => 'Nowloading25',
 			'remember_token' => Str::random(30)
 		]);
+		$user->assignRole('admin');
+		$user->save();
     }
 }
