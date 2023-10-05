@@ -3,7 +3,7 @@
 		<div class="container my-5">
 			<div class="card">
 				<div class="card-header d-flex justify-content-end">
-					<a href="{{ route('users.create') }}" class="btn btn-primary">Create User</a>
+					<div class="btn btn-primary" @click="openModal">Create</div>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive my-4 mx-2">
@@ -58,18 +58,31 @@
 					</div>
 				</div>
 			</div>
+			<div>
+				<product-modal />
+			</div>
 		</div>
 	</section>
 </template>
 
 <script>
+	import ProductModal from './ProductModal.vue' //import a child component then register on components below
 	export default {
 		//Any variable writting in here needs to have [this] example this.products
+		components: { ProductModal }, //component registration
 		name: '',
 		props: ['products'],
 
 		created() {
 			console.log(this.products)
+		},
+
+		data() {
+			//These variables are from the template they can be passed to a child using props
+			return {
+				modal: null,
+				product: null
+			}
 		},
 
 		mounted() {
@@ -79,6 +92,16 @@
 		methods: {
 			async index() {
 				$('#product_table').DataTable()
+				const modal_id = document.getElementById('product_modal')
+				this.modal = new bootstrap.Modal(modal_id)
+
+				modal_id.addEventListener('hidden.bs.modal', function (event) {
+					alert('Hello, World!')
+					// this.$refs.product_modal.reset()
+				})
+			},
+			openModal() {
+				this.modal.show()
 			}
 		}
 	}
