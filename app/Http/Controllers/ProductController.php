@@ -8,10 +8,16 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
 
-    public function index()
+    public function home()
     {
 		$products = Product::get();
         return view('index', compact("products"));
+    }
+
+    public function index()
+    {
+		$products = Product::with('category')->get();
+        return view('products.index', compact("products"));
     }
 
 

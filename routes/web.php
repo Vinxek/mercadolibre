@@ -9,7 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Models\Category;
 
 Auth::routes();
-Route::get('/', [ProductController::class, 'index']);
+Route::get('/', [ProductController::class, 'home'])->name('product.home');
 
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('/home', [HomeController::class, 'index'])->name('home');
