@@ -19,7 +19,7 @@ class UserRequest extends FormRequest
 		$rules = [
 		'user_name' => ['required', 'string'],
         'email' => ['required', 'string'],
-        'password' =>['required', 'confirmed', 'string', 'min:6'],
+		'password' => ['confirmed', 'string', 'min:6'],
         'name' => ['required', 'string'] ,
         'last_name' => ['required', 'string'],
         'phone_number' => ['required', 'string'],
@@ -28,9 +28,11 @@ class UserRequest extends FormRequest
 		if($this->method() == 'POST'){
 			array_push($rules['user_name'], 'unique:users,user_name');
 			array_push($rules['email'], 'unique:users,email');
+			array_push($rules['password'], 'required', 'confirmed');
 		}else{
 			array_push($rules['user_name'], 'unique:users,user_name, ' . $this->user->id);
 			array_push($rules['email'], 'unique:users,email, ' . $this->user->id);
+			array_push($rules['password'], 'nullable');
 		}
 
         return $rules;
