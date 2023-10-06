@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthUserAPIController;
 
 
@@ -25,4 +26,6 @@ Route::group(['middleware' => ['auth:sanctum']], function (){
 		Route::put('/update/{user}', 'update');
 		Route::delete('/delete/{user}', 'destroy');
 	});
+
+
 });

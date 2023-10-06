@@ -1,12 +1,12 @@
 <?php
 
-use App\Models\Product;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
-use App\Models\Category;
+use App\Http\Controllers\CategoryController;
 
 Auth::routes();
 Route::get('/', [ProductController::class, 'home'])->name('product.home');
@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
 	});
 	Route::group(['prefix' => 'categories', 'middleware'=>['role:admin'], 'controller' => CategoryController::class], function () {
 		Route::get('/', 'index')->name('categories.index');
+		Route::get('/get-all', 'index')->name('categories.get-all');
 		Route::get('/create', 'create')->name('categories.create');
 		Route::post('/', 'store')->name('categories.store');
 		Route::get('/{category}/edit', 'edit')->name('categories.edit');

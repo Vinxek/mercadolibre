@@ -29,7 +29,10 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $product =  new Product($request->all());
+		$product->save();
+		if(!$request->ajax()) return back()->with('success', 'Product Created');
+		return response()->json(['Status' => 'product Created', 'products' => $product], 201);
     }
 
 
