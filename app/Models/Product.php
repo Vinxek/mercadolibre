@@ -18,6 +18,11 @@ class Product extends Model
         'stock',
     ];
 
+	public function getPriceAttribute($value)
+    {
+        return '$' . number_format($value / 1000, 3, '.', '');
+    }
+
 	public function category()
 	{
 		return $this->belongsTo(Category::class, 'category_id', 'id');

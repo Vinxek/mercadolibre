@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Requests\Product\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -21,13 +22,7 @@ class ProductController extends Controller
     }
 
 
-    public function create()
-    {
-        //
-    }
-
-
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         $product =  new Product($request->all());
 		$product->save();
@@ -36,26 +31,21 @@ class ProductController extends Controller
     }
 
 
-    public function show($id)
+    public function show(Product $product)
     {
-        //
+        return response()->json(['product'],200);
+    }
+
+    public function update(ProductRequest $request, Product $product)
+    {
+		$product->update($request->all());
+        return response()->json([],204);
     }
 
 
-    public function edit($id)
+    public function destroy(Product $product)
     {
-        //
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-
-    public function destroy($id)
-    {
-        //
+        $product->delete();
+		return response()->json([],204);
     }
 }

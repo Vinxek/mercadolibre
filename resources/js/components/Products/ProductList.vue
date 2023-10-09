@@ -44,11 +44,13 @@
 									</td>
 									<td>{{ product.stock }}</td>
 									<td>
-										<div class="d-flex">
-											<a href="" class="btn btn-warning btn-sm"><i
-													class="fa-solid fa-user-pen"></i></a>
+										<div class="d-flex justify-content-center">
+											<button type="button" class="btn btn-warning btn-sm"
+												@click="editProduct(product)"><i class="fa-solid fa-pen"
+													title="Edit"></i></button>
 											<form action="" method="post">
-												<button class="ms-2 btn btn-danger btn-sm">
+												<button type="button" class="ms-2 btn btn-danger btn-sm"
+													@click="deleteProduct(product)" title="delete">
 													<i class="fa-solid fa-trash-can"></i>
 												</button>
 											</form>
@@ -61,7 +63,7 @@
 				</div>
 			</div>
 			<div>
-				<product-modal />
+				<product-modal :product_data="product" ref="product_modal" />
 			</div>
 		</div>
 	</section>
@@ -83,7 +85,7 @@ export default {
 		//These variables are from the template they can be passed to a child using props
 		return {
 			modal: null,
-			product: null
+			product: {}
 		}
 	},
 
@@ -97,10 +99,24 @@ export default {
 			const modal_id = document.getElementById('product_modal')
 			this.modal = new bootstrap.Modal(modal_id)
 
-			modal_id.addEventListener('hidden.bs.modal', function (event) {
-				alert('Hello, World!')
-				// this.$refs.product_modal.reset()
+
+			modal_id.addEventListener('hidden.bs.modal', e => {
+				this.$refs.product_modal.reset()
 			})
+		},
+
+		editProduct(product) {
+			this.product = product
+			this.openModal()
+		},
+
+		async deleteProduct({ id }) {
+			try {
+				await axios.delete(`/products/${id}`)
+				window.location.reload()
+			} catch (error) {
+				console.error(error);
+			}
 		},
 		openModal() {
 			this.modal.show()

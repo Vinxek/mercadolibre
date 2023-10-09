@@ -6,12 +6,12 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title">
-						{{ is_created ? "create" : "edit" }} Product
+						{{ is_create ? "Create" : "Edit" }} Product
 					</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<!-- formulario -->
-				<Form :validation-schema="schema" @submit="saveProduct">
+				<Form :validation-schema="schema" @submit="saveProduct" ref="form">
 					<div class="modal-body">
 						<!-- product_name -->
 						<div class="col-12">
@@ -96,6 +96,15 @@ import * as yup from "yup";
 import axios from "axios";
 
 export default {
+	props: ['product_data'],
+	watch: {
+		product_data(new_value) {
+			this.product = { ...new_value }
+			if (!this.product.id) return
+			this.is_create = false
+			this.category = this.product.category_id
+		}
+	},
 	components: { Field, Form },
 	computed: {
 		schema() {
@@ -111,7 +120,7 @@ export default {
 
 	data() {
 		return {
-			is_created: true,
+			is_create: true,
 			product: {},
 			author: null,
 			category: null,
@@ -132,9 +141,14 @@ export default {
 		async saveProduct() {
 			try {
 				this.product.category_id = this.category;
-				await axios.post("/products", this.product);
-				await Swal.fire("success", "Felicidades");
-				// this.$parent.closeModal();
+				if (this.is_create) {
+					await axios.post("/products", this.product);
+					await Swal.fire("success", "Product Saved");
+				} else {
+					await axios.put(`/products/${this.product.id}`, this.product)
+					await Swal.fire("success", "Product Edited");
+				}
+				window.location.reload()
 			} catch (error) {
 				console.error(error);
 			}
@@ -150,6 +164,16 @@ export default {
 				console.error(error);
 			}
 		},
+		reset() {
+			this.is_create = true,
+				this.product = {},
+				this.author = null,
+				this.category = null,
+				this.categories_data = [],
+				this.$parent.product = {},
+				setTimeout(() => this.$refs.form.resetForm(), 100)
+
+		}
 	},
 };
 </script>
