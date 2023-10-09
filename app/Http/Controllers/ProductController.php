@@ -4,31 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Traits\UploadFile;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Product\ProductRequest;
+use App\Http\Requests\product\ProductUpdateRequest;
 
 class ProductController extends Controller
 {
+	use UploadFile;
 
     public function home()
     {
-		$products = Product::get();
+		$products = Product::with('category', 'file')->get();
         return view('index', compact("products"));
     }
 
     public function index()
     {
-		$products = Product::with('category')->get();
+		$products = Product::with('category', 'file')->get();
         return view('products.index', compact("products"));
     }
 
 
     public function store(ProductRequest $request)
-    {
-        $product =  new Product($request->all());
-		$product->save();
-		if(!$request->ajax()) return back()->with('success', 'Product Created');
-		return response()->json(['Status' => 'product Created', 'products' => $product], 201);
-    }
+	{
+		try {
+			DB::beginTransaction();
+			$product = new Product($request->all());
+			$product->save();
+			$this->uploadFile($product, $request);
+			DB::commit();
+			return response()->json([],201);
+		} catch (\Throwable $th) {
+			DB::rollBack();
+		}
+	}
 
 
     public function show(Product $product)
@@ -36,16 +46,23 @@ class ProductController extends Controller
         return response()->json(['product'],200);
     }
 
-    public function update(ProductRequest $request, Product $product)
-    {
+    public function update(ProductUpdateRequest $request, product $product)
+	{	try {
+		DB::beginTransaction();
 		$product->update($request->all());
-        return response()->json([],204);
-    }
+		$this->uploadFile($product, $request);
+		DB::commit();
+		return response()->json([],201);
+	} catch (\Throwable $th) {
+		DB::rollBack();
+	}
+	}
 
 
     public function destroy(Product $product)
     {
         $product->delete();
+		$this->deleteFile($product);
 		return response()->json([],204);
     }
 }

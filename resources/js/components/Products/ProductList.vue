@@ -22,8 +22,6 @@
 								<tr v-for="(product, index) in products" :key="index">
 									<td>
 										<div class="d-flex align-items-center">
-											<img src="https://api.dicebear.com/7.x/icons/svg?seed=Peanut" alt="avatar"
-												style="width: 45px; height: 45px" class="rounded-circle" />
 											<div class="ms-3">
 												<p class="fw-bold mb-1">{{ product.product_name }}</p>
 												<!-- <p class="text-muted mb-0">{{ product.description }}</p> -->
@@ -91,6 +89,8 @@ export default {
 
 	mounted() {
 		this.index()
+
+
 	},
 
 	methods: {

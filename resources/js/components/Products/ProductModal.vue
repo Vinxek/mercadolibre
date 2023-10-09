@@ -13,6 +13,20 @@
 				<!-- formulario -->
 				<Form :validation-schema="schema" @submit="saveProduct" ref="form">
 					<div class="modal-body">
+
+						<!-- Image -->
+						<div class="col-12 d-flex justify-content-center mt-1">
+							<img :src="image_preview" alt="Imagen Libro" class="img-thumbnail" width="170" height="170">
+						</div>
+
+						<!-- Load Image -->
+						<div class="col-12 mt-1 ">
+							<label for="file" class="form-label">Imagen</label>
+							<input type="file" class="" id="file" accept="image/*" @change="previewImage">
+
+						</div>
+
+
 						<!-- product_name -->
 						<div class="col-12">
 							<label for="product_name">Product Name</label>
@@ -103,6 +117,7 @@ export default {
 			if (!this.product.id) return
 			this.is_create = false
 			this.category = this.product.category_id
+			this.image_preview = this.product.file.route
 		}
 	},
 	components: { Field, Form },
@@ -124,6 +139,8 @@ export default {
 			product: {},
 			author: null,
 			category: null,
+			file: null,
+			image_preview: '/storage/image/products/default.png',
 			categories_data: [],
 			load_category: false,
 		};
@@ -141,17 +158,32 @@ export default {
 		async saveProduct() {
 			try {
 				this.product.category_id = this.category;
+				const product = this.createFormData(this.product)
 				if (this.is_create) {
-					await axios.post("/products", this.product);
+					await axios.post("/products/store", product);
 					await Swal.fire("success", "Product Saved");
 				} else {
-					await axios.put(`/products/${this.product.id}`, this.product)
+					await axios.post(`/products/update/${this.product.id}`, product)
 					await Swal.fire("success", "Product Edited");
 				}
 				window.location.reload()
 			} catch (error) {
 				console.error(error);
 			}
+		},
+
+		previewImage(envent) {
+			this.file = envent.target.files[0]
+			this.image_preview = URL.createObjectURL(this.file)
+		},
+
+		createFormData(data) {
+			const form_data = new FormData()
+			if (this.file) form_data.append('file', this.file, this.file.name)
+			for (const prop in data) {
+				form_data.append(prop, data[prop])
+			}
+			return form_data
 		},
 
 		async getCategories() {
@@ -169,6 +201,7 @@ export default {
 				this.product = {},
 				this.author = null,
 				this.category = null,
+				this, file = null,
 				this.categories_data = [],
 				this.$parent.product = {},
 				setTimeout(() => this.$refs.form.resetForm(), 100)
