@@ -26,7 +26,6 @@
                     </div>
                 </div>
             @endforeach
-
         </section>
     </div>
 </x-app>

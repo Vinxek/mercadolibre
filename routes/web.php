@@ -24,7 +24,7 @@ Route::group(['middleware' => ['auth']], function () {
 	});
 	Route::group(['prefix' => 'products', 'middleware'=>['role:admin'], 'controller' => ProductController::class], function () {
 		Route::get('/', 'index')->name('products.index');
-		Route::get('/show{product}', 'show')->name('products.show');
+		Route::get('/show/{product}', 'show')->name('products.show');
 		Route::post('/store', 'store')->name('products.store');
 		Route::get('/{product}/edit', 'edit')->name('products.edit');
 		Route::post('/update/{product}', 'update')->name('products.update');
@@ -39,4 +39,6 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::put('/{category}', 'update')->name('categories.update');
 		Route::delete('/{category}', 'destroy')->name('categories.destroy');
 	});
+
+
 });

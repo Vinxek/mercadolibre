@@ -2,7 +2,7 @@
     <div class="container my-5">
 
         <div class="d-flex justify-content-center my-4">
-            <h1>ProductList</h1>
+            <h1>Product List</h1>
         </div>
 
         <product-list :products="{{ $products }}" />

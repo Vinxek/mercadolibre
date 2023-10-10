@@ -30,9 +30,9 @@ trait UploadFile
 		if (!$file) return;
 		$fileIsNotDefault = $file->route != "/storage/{$this->getRoute($model)}/default.png";
 		$issetFile = FileSystem::exists(public_path($file->route));
-		if ($issetFile && $fileIsNotDefault) {
-			FileSystem::delete(public_path($file->route));
-		}
+		// if ($issetFile && $fileIsNotDefault) {
+		// 	FileSystem::delete(public_path($file->route));
+		// }
 		$file->delete();
 	}
 

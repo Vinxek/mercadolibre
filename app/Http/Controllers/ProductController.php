@@ -44,11 +44,15 @@ class ProductController extends Controller
 	}
 
 
-    public function show(Product $product)
-    {
-        return response()->json(['product'],200);
+    public function show(Request $request, Product $product)
+{
+    if (!$request->ajax()) {
+        $productWithFile = $product->load('file'); // Eager load the 'file' relationship
+        return view('products.productPage', compact('productWithFile'));
     }
 
+    return response()->json(['product' => $product], 200);
+}
     public function update(ProductUpdateRequest $request, product $product)
 	{	try {
 		DB::beginTransaction();
