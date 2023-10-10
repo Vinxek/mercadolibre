@@ -59,7 +59,10 @@
                             @role('admin')
                                 {{-- users --}}
                                 <a class="dropdown-item" href="{{ route('users.index') }}">
-                                    users
+                                    Manage Users
+                                </a>
+                                <a class="dropdown-item" href="{{ route('products.index') }}">
+                                    Manage Products
                                 </a>
                             @endrole
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

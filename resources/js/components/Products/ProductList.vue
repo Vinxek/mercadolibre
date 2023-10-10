@@ -10,6 +10,7 @@
 						<table class="table align-middle mb-0 bg-white" id="product_table">
 							<thead class="bg-light">
 								<tr>
+									<th>Product</th>
 									<th>Product Name</th>
 									<th>Description</th>
 									<th>Category</th>
@@ -19,7 +20,9 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="(product, index) in products" :key="index">
+								<tr v-for="(product, index) in  products " :key="index">
+									<td><img :src="product.file.route" alt="product image"
+											style="width: 100px; height: 100px;"></td>
 									<td>
 										<div class="d-flex align-items-center">
 											<div class="ms-3">
