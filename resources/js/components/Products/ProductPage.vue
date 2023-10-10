@@ -21,18 +21,21 @@
 						<h5 style="margin-bottom: 50px;">Price {{ formattedPrice }} COP</h5>
 						<div class="d-grid gap-2">
 							<a href="#" class="btn btn-primary">Buy Now</a>
-							<a href="#" class="btn btn-primary mt-2">Add to Cart</a>
+							<button class="btn btn-primary mt-2" @click="openModal">Add to Cart</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<shopping-cart :product="product" />
 	</div>
 </template>
 
 
 <script>
+import ShoppingCart from './ShoppingCart.vue'
 export default {
+	components: { ShoppingCart },
 	props: ['product'],
 
 	computed: {
@@ -48,5 +51,35 @@ export default {
 			return formatted;
 		},
 	},
+
+	data() {
+		return {
+			modal: null,
+		}
+	},
+
+	mounted() {
+		this.index()
+
+
+	},
+
+	methods: {
+		async index() {
+			const modal_id = document.getElementById('shopping_cart')
+			this.modal = new bootstrap.Modal(modal_id)
+
+
+			modal_id.addEventListener('hidden.bs.modal', e => {
+
+			})
+		},
+
+		openModal() {
+			this.modal.show()
+		}
+	}
+
+
 };
 </script>

@@ -15,7 +15,10 @@
                                         <p>{{ $product->format_description }}</p>
                                     </div>
                                     <div class="card-footer d-flex justify-content-between align-items-center">
-                                        <div class=""><button class="btn btn-primary">Add to cart</button></div>
+                                        <div class="">
+                                            <a href="{{ route('products.show', ['product' => $product->id]) }}"
+                                                class="btn btn-primary">Product Page</a>
+                                        </div>
                                         <div class="">
                                             <p><strong>{{ $product->price }}</strong></p>
                                         </div>
