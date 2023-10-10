@@ -46,3 +46,12 @@ categories
 -data (id,name)
 -categories crud
 -categories crud (view/edit/delete)
+
+notes
+do the component for the userform
+do the category view and pass teh category
+validate evrything and set roles
+make the searchbar work
+query or view
+
+

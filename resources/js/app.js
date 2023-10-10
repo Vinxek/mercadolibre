@@ -6,11 +6,13 @@ import store from './store'; // Import your Vuex store
 // Components ---------------------------------------------------
 import ProductList from './components/Products/ProductList.vue';
 import ProductPage from './components/Products/ProductPage.vue';
+import UserForms from './components/Users/UserForms.vue'
 
 const app = createApp({
   components: {
     ProductList,
     ProductPage,
+	UserForms
   },
 });
 
