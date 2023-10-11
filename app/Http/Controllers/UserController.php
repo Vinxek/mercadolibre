@@ -8,6 +8,7 @@ use App\Http\Traits\UploadFile;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\User\UserRequest;
+use App\Http\Requests\User\UserUpdateRequest;
 
 class UserController extends Controller
 {
@@ -60,12 +61,19 @@ class UserController extends Controller
     }
 
 
-    public function update(UserRequest $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
-		$user->update($request->all());
-		$user->syncRoles($request->role);
-		if(!$request->ajax()) return back()->with('success', 'User updated');
-		return response()->json([], 204);
+		try {
+			DB::beginTransaction();
+			$user->update($request->all());
+			$user->syncRoles($request->role);
+			$this->uploadFile($user, $request);
+			DB::commit();
+			if(!$request->ajax()) return back()->with('success', 'User updated');
+			return response()->json([], 204);
+		} catch (\Throwable $th) {
+			DB::rollBack();
+		}
     }
 
 

@@ -172,10 +172,10 @@ export default {
 			try {
 				const user = this.createFormData(this.user)
 				if (this.is_create) {
-					await axios.post("/users", user)
+					await axios.post("/users/store", user)
 					await Swal.fire("success", "Product Saved");
 				} else {
-					await axios.put(`/users/${this.user.id}`, user)
+					await axios.post(`/users/update/${this.user.id}`, user)
 					await Swal.fire("success", "Product Edited");
 				}
 

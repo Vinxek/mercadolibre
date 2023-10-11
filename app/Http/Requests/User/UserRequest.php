@@ -23,6 +23,7 @@ class UserRequest extends FormRequest
         'name' => ['required', 'string'] ,
         'last_name' => ['required', 'string'],
         'phone_number' => ['required', 'string'],
+		'file' => ['required', 'image']
 		];
 
 		if($this->method() == 'POST'){
