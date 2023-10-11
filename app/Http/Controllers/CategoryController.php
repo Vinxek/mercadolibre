@@ -12,7 +12,7 @@ class CategoryController extends Controller
     {
 		$categoryName = $request->input('categoryName');
         $categories = Category::get();
-		$products = Product::with('file','category')->get();
+		$products = Product::with('file','category')->where('stock', '>', 0)->get();
         if(!$request->ajax()) return view('categories.index', compact('categoryName' ,'products'));
 		return response()->json(['categories' => $categories], 200);
     }
