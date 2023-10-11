@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Traits\UploadFile;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\User\UserRequest;
 
@@ -12,7 +14,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-		$users = User::get();
+		$users = User::with('file')->get();
         if(!$request->ajax()) return view('users.index', compact('users'));
 		return response()->json(['users' => $users	], 200);
     }
@@ -24,14 +26,22 @@ class UserController extends Controller
         return view('users.create', compact('roles'));
 	}
 
-
+	use UploadFile;
     public function store(UserRequest $request)
     {
-        $user =  new User($request->all());
-		$user->save();
-		$user->assignRole($request->role);
-		if(!$request->ajax()) return back()->with('success', 'User Created');
-		return response()->json(['Status' => 'User Created', 'users' => $user], 201);
+
+		try {
+			DB::beginTransaction();
+			$user =  new User($request->all());
+			$user->save();
+			$user->assignRole($request->role);
+			$this->uploadFile($user, $request);
+			DB::commit();
+			if(!$request->ajax()) return back()->with('success', 'User Created');
+			return response()->json(['Status' => 'User Created', 'users' => $user], 201);
+		} catch (\Throwable $th) {
+			DB::rollBack();
+		}
     }
 
 
@@ -41,11 +51,12 @@ class UserController extends Controller
 		return response()->json(['users' => $user	], 200);
     }
 
-
+	// this
     public function edit(User $user)
     {
 		$roles = Role::all()->pluck('name');
-		return view('users.edit', compact('user','roles'));
+		$file = $user->file;
+		return view('users.edit', compact('user','roles', 'file'));
     }
 
 

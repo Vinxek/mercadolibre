@@ -22,7 +22,7 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="https://api.dicebear.com/7.x/icons/svg?seed=Peanut" alt="avatar"
+                                            <img src="{{ $user->file->route }}" alt="avatar"
                                                 style="width: 45px; height: 45px" class="rounded-circle" />
                                             <div class="ms-3">
                                                 <p class="fw-bold mb-1">{{ $user->user_name }}</p>

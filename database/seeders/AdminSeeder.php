@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\File;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
@@ -23,5 +24,7 @@ class AdminSeeder extends Seeder
 		]);
 		$user->assignRole('admin');
 		$user->save();
+		$file = new File(['route' => '/storage/images/users/default.png']);
+		$user->file()->save($file);
     }
 }

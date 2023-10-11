@@ -1,6 +1,18 @@
 <template>
 	<Form @submit="saveUser">
 
+		<!-- Image -->
+		<div class="col-12 d-flex justify-content-center mt-1">
+			<img :src="image_preview" alt="Avatar" class="img-thumbnail" width="170" height="170">
+		</div>
+
+		<!-- Load Image -->
+		<div class="col-12 mt-1 ">
+			<label for="file" class="form-label">Imagen</label>
+			<input type="file" class="" id="file" accept="image/*" @change="previewImage">
+
+		</div>
+
 		<!-- user name -->
 		<div class="col-12">
 			<label for="user_name">User Name</label>
@@ -63,12 +75,10 @@
 
 		<!-- role -->
 		<div class="col-12">
-			<label for="role">Role</label>
-
 			<Field name="role" v-slot="{ errorMessage, field, valid }" v-model="user.role">
 				<label for="role">Role</label>
 
-				<v-select id="role" :options="roles_data" v-model="user.role" placeholder="Select a Role" :clearable="false"
+				<v-select id="role" :options="roles" v-model="user.role" placeholder="Select a Role" :clearable="false"
 					:class="`${errorMessage ? 'is-invalid' : ''}`"></v-select>
 
 
@@ -101,9 +111,9 @@
 		</div>
 
 		<div class="my-3 d-flex justify-content-between">
-			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+			<a href="/users" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
 				Close
-			</button>
+			</a>
 			<button type="Submit" class="btn btn-primary">Save</button>
 		</div>
 
@@ -115,7 +125,7 @@ import { Field, Form } from 'vee-validate'
 import axios from 'axios';
 export default {
 
-	props: ['user_data', 'roles_data'],
+	props: ['user_data', 'roles_data', 'image'],
 	components: { Field, Form },
 	watch: {
 		user_data(new_value) {
@@ -128,17 +138,18 @@ export default {
 	data() {
 		return {
 			is_create: true,
-			user: {
-				user_name: null,
-				email: null,
-				name: null,
-				last_name: null,
-				phone_number: null,
-				role: null,
-				password: null,
-				password_confirmation: null,
-			},
-			roles: [],
+			user: {},
+			user_name: null,
+			email: null,
+			name: null,
+			last_name: null,
+			phone_number: null,
+			role: null,
+			password: null,
+			password_confirmation: null,
+			file: null,
+			image_preview: '/storage/images/users/default.png',
+			roles: ['user', 'admin'],
 		};
 	},
 
@@ -152,30 +163,42 @@ export default {
 			this.is_create = false;
 		}
 
-		this.roles = this.roles_data;
-
-		console.log("this is the user", this.roles_data)
-
+		this.roles = ['user', 'admin']
+		console.log(this.roles_data)
 	},
 
 	methods: {
 		async saveUser() {
 			try {
-				this.user.role = 'admin'
+				const user = this.createFormData(this.user)
 				if (this.is_create) {
-					await axios.post("/users", this.user)
+					await axios.post("/users", user)
 					await Swal.fire("success", "Product Saved");
 				} else {
-					await axios.put(`/users/${this.user.id}`, this.user)
+					await axios.put(`/users/${this.user.id}`, user)
 					await Swal.fire("success", "Product Edited");
-					this.$router.push({ name: 'user.index' });
 				}
 
 			} catch (error) {
 				console.error("error updating user", error)
 			}
 		},
+
+		previewImage(event) {
+			this.file = event.target.files[0]
+			this.image_preview = URL.createObjectURL(this.file)
+		},
+
+		createFormData(data) {
+			const form_data = new FormData()
+			if (this.file) form_data.append('file', this.file, this.file.name)
+			for (const prop in data) {
+				form_data.append(prop, data[prop])
+			}
+			return form_data
+		},
 	},
+
 };
 </script>
 

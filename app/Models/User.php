@@ -47,4 +47,9 @@ class User extends Authenticatable
 	{
 		return $this->hasMany(Purchase::class, 'user_id', 'id');
 	}
+
+	public function file()
+	{
+		return $this->morphOne(File::class, 'fileable');
+	}
 }
