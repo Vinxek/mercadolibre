@@ -65,16 +65,19 @@
 		<div class="col-12">
 			<label for="role">Role</label>
 
-			<Field name="role" v-slot="{ errorMessage, field }" v-model="user.role">
-				<input type="text" id="role" v-model="user.role" :class="`form-control ${errorMessage ? 'is-invalid' : ''}`"
-					v-bind="field" />
+			<Field name="role" v-slot="{ errorMessage, field, valid }" v-model="user.role">
+				<label for="role">Role</label>
 
-				<span class="invalid-feedback">{{ errorMessage }}</span>
+				<v-select id="role" :options="roles_data" v-model="user.role" placeholder="Select a Role" :clearable="false"
+					:class="`${errorMessage ? 'is-invalid' : ''}`"></v-select>
+
+
+				<span class="invalid-feedback" v-if="!valid">{{ errorMessage }}</span>
 			</Field>
 		</div>
 
 		<!-- password -->
-		<div class="col-12">
+		<div class="col-12" v-if="is_create">
 			<label for="password">Password</label>
 
 			<Field name="password" v-slot="{ errorMessage, field }" v-model="user.password">
@@ -86,7 +89,7 @@
 		</div>
 
 		<!-- confirm password -->
-		<div class="col-12">
+		<div class="col-12" v-if="is_create">
 			<label for="password_confirmation">Confirm Password</label>
 
 			<Field name="password_confirmation" v-slot="{ errorMessage, field }" v-model="user.password_confirmation">
@@ -112,11 +115,11 @@ import { Field, Form } from 'vee-validate'
 import axios from 'axios';
 export default {
 
-	props: ['user_data'],
+	props: ['user_data', 'roles_data'],
 	components: { Field, Form },
 	watch: {
 		user_data(new_value) {
-			this.user = new_value
+			this.user = { ...new_value }
 			if (!this.user.id) return
 			this.is_create = false
 		}
@@ -125,26 +128,51 @@ export default {
 	data() {
 		return {
 			is_create: true,
-			user: {},
-			user_name: null,
-			email: null,
-			name: null,
-			last_name: null,
-			phone_number: null,
-			role: null,
-			password: null,
-			password_confirmation: null,
+			user: {
+				user_name: null,
+				email: null,
+				name: null,
+				last_name: null,
+				phone_number: null,
+				role: null,
+				password: null,
+				password_confirmation: null,
+			},
+			roles: [],
 		};
 	},
+
+	mounted() {
+
+		if (this.user_data) {
+			this.user = {
+				...this.user_data,
+				password: null
+			};
+			this.is_create = false;
+		}
+
+		this.roles = this.roles_data;
+
+		console.log("this is the user", this.roles_data)
+
+	},
+
 	methods: {
 		async saveUser() {
 			try {
+				this.user.role = 'admin'
 				if (this.is_create) {
 					await axios.post("/users", this.user)
 					await Swal.fire("success", "Product Saved");
+				} else {
+					await axios.put(`/users/${this.user.id}`, this.user)
+					await Swal.fire("success", "Product Edited");
+					this.$router.push({ name: 'user.index' });
 				}
+
 			} catch (error) {
-				console.error(error)
+				console.error("error updating user", error)
 			}
 		},
 	},
