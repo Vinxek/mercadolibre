@@ -20,7 +20,6 @@ class UserUpdateRequest extends FormRequest
 			'email' => ['required', 'string'],
 			'name' => ['required', 'string'] ,
 			'last_name' => ['required', 'string'],
-			'phone_number' => ['required', 'string'],
 			'file' => ['nullable', 'image']
 			];
 

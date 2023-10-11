@@ -20,11 +20,14 @@
             </ul>
 
             {{-- This got be made a date table in the future --}}
-            <form method="POST" action="{{ route('search.product') }}">
+            <form method="POST" action="{{ route('search.product') }}" class="">
                 @csrf
-                <input type="text" name="product_name" placeholder="Search Products">
-                <button type="submit">Search</button>
+                <div class="input-group">
+                    <input type="text" name="product_name" class="form-control" placeholder="Search Products">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
             </form>
+
 
 
             <!-- Right Side Of Navbar -->

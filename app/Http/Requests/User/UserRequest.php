@@ -25,15 +25,15 @@ class UserRequest extends FormRequest
         'phone_number' => ['required', 'string'],
 		];
 
-		if($this->method() == 'POST'){
-			array_push($rules['user_name'], 'unique:users,user_name');
-			array_push($rules['email'], 'unique:users,email');
-			array_push($rules['password'], 'required', 'confirmed');
-		}else{
-			array_push($rules['user_name'], 'unique:users,user_name, ' . $this->user->id);
-			array_push($rules['email'], 'unique:users,email, ' . $this->user->id);
-			array_push($rules['password'], 'nullable');
-		}
+		// if($this->method() == 'POST'){
+		// 	array_push($rules['user_name'], 'unique:users,user_name');
+		// 	array_push($rules['email'], 'unique:users,email');
+		// 	array_push($rules['password'], 'required', 'confirmed');
+		// }else{
+		// 	array_push($rules['user_name'], 'unique:users,user_name, ' . $this->user->id);
+		// 	array_push($rules['email'], 'unique:users,email, ' . $this->user->id);
+		// 	array_push($rules['password'], 'nullable');
+		// }
 
 		if ($this->path() != 'api/register') {
 			$rules['role'] = ['required', 'string', 'in:user,admin'];

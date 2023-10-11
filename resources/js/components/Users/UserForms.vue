@@ -1,5 +1,5 @@
 <template>
-	<Form @submit="saveUser">
+	<Form :validation-schema="schema" @submit="saveUser">
 
 		<!-- Image -->
 		<div class="col-12 d-flex justify-content-center mt-1">
@@ -123,10 +123,23 @@
 <script>
 import { Field, Form } from 'vee-validate'
 import axios from 'axios';
+import * as yup from "yup";
 export default {
 
 	props: ['user_data', 'roles_data', 'image'],
 	components: { Field, Form },
+	computed: {
+		schema() {
+			return yup.object({
+				user_name: yup.string().required(),
+				email: yup.string().email().required(),
+				name: yup.string().required(),
+				last_name: yup.string().required(),
+				role: yup.string().required().oneOf(['user', 'admin']),
+				phone_number: yup.number().required().positive().integer(),
+			});
+		},
+	},
 	watch: {
 		user_data(new_value) {
 			this.user = { ...new_value }
@@ -165,6 +178,7 @@ export default {
 
 		this.roles = ['user', 'admin']
 		console.log(this.roles_data)
+		console.log(this.is_create)
 	},
 
 	methods: {

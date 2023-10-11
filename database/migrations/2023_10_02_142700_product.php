@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('product_name');
             $table->text('description');
             $table->bigInteger('price')->unsigned();
-            $table->bigInteger('stock')->unsigned();
+            $table->bigInteger('stock');
 			$table->timestamps();
 			$table->softDeletes();
 
