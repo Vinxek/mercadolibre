@@ -72,4 +72,18 @@ class ProductController extends Controller
 		$this->deleteFile($product);
 		return response()->json([],204);
     }
+
+	public function searchProduct(Request $request)
+{
+    $productName = $request->input('product_name');
+
+    $product = Product::where('product_name', 'LIKE', "%$productName%")->first();
+
+    if ($product) {
+		// dd($product);
+        return redirect()->route('products.show', ['product' => $product->id]);
+    } else {
+        return "No product found with the given name.";
+    }
+}
 }

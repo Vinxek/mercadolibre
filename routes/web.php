@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth']], function () {
 		Route::post('/store', 'store')->name('products.store');
 		Route::get('/{product}/edit', 'edit')->name('products.edit');
 		Route::post('/update/{product}', 'update')->name('products.update');
+		Route::post('/search', 'searchProduct')->name('search.product');
 		Route::delete('/{product}', 'destroy')->name('products.destroy');
 	});
 	Route::group(['prefix' => 'categories', 'middleware'=>['role:admin'], 'controller' => CategoryController::class], function () {

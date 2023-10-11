@@ -20,10 +20,12 @@
             </ul>
 
             {{-- This got be made a date table in the future --}}
-            <form class="d-flex justify-content-between col-sm-6">
-                <input class="form-control flex-grow-1 me-2 custom-search-input" type="search"
-                    placeholder="Search Products" aria-label="Search">
+            <form method="POST" action="{{ route('search.product') }}">
+                @csrf
+                <input type="text" name="product_name" placeholder="Search Products">
+                <button type="submit">Search</button>
             </form>
+
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">
