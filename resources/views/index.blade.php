@@ -1,14 +1,15 @@
 <x-app title="Mercadolibre | Home">
     <div class="container">
         <section class="d-flex flex-wrap justify-content-center">
-
             @foreach ($categories as $category)
                 <div class="container">
-                    <h1>{{ $category->category_name }}</h1>
-
+                    <h1><a
+                            href="{{ route('categories.index', ['categoryName' => $category->category_name]) }}">{{ $category->category_name }}</a>
+                    </h1>
                     <div class="d-flex flex-wrap justify-content-center">
+                        @php $count = 0 @endphp
                         @foreach ($products as $product)
-                            @if ($product->category_id == $category->id)
+                            @if ($product->category_id == $category->id && $count < 5)
                                 <div class="card mx-2 my-3 card_size">
                                     <img src="{{ $product->file->route }}" class="card-img-top" alt="Product image">
                                     <div class="card-body">
@@ -24,6 +25,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @php $count++ @endphp
                             @endif
                         @endforeach
                     </div>

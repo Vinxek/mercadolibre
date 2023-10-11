@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -9,8 +10,10 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
+		$categoryName = $request->input('categoryName');
         $categories = Category::get();
-        if(!$request->ajax()) return view();
+		$products = Product::with('file','category')->get();
+        if(!$request->ajax()) return view('categories.index', compact('categoryName' ,'products'));
 		return response()->json(['categories' => $categories], 200);
     }
 
