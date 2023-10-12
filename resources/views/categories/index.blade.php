@@ -9,7 +9,7 @@
                             <img src="{{ $product->file->route }}" class="card-img-top" alt="product image">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $product->product_name }}</h5>
-                                <p class="card-text">{{ $product->description }}</p>
+                                <p class="card-text">{{ $product->format_description }}</p>
                                 <p class="card-text">Price: ${{ $product->price }}</p>
                                 <p class="card-text">Stock: {{ $product->stock }}</p>
                                 <p class="card-text">Category: {{ $product->category->category_name }}</p>

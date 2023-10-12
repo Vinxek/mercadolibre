@@ -39,6 +39,12 @@ body {
     height: auto;
 }
 
+.card img {
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+}
+
 // h1, h2, h3, h4, h5, h6 {
 //     color: #2d3277; /* Replace with your custom color code */
 // }

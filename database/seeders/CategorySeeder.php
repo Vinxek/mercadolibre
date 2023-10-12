@@ -23,7 +23,7 @@ class CategorySeeder extends Seeder
         foreach ($categories as $categoryName) {
             $category = Category::create(['category_name' => $categoryName]);
 
-            Product::factory(10)->create([
+            Product::factory(5)->create([
                 'category_id' => $category->id,
             ]);
         }

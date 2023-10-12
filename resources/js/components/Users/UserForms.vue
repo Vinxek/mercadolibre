@@ -110,11 +110,8 @@
 			</Field>
 		</div>
 
-		<div class="my-3 d-flex justify-content-between">
-			<a href="/users" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-				Close
-			</a>
-			<button type="Submit" class="btn btn-primary">Save</button>
+		<div class="my-3 d-flex justify-content-center">
+			<button type="Submit" class="btn btn-primary col-12">Save</button>
 		</div>
 
 	</Form>
