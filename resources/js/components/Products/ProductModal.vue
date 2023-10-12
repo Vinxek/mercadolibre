@@ -202,7 +202,6 @@ export default {
 				this.author = null,
 				this.category = null,
 				this, file = null,
-				this.categories_data = [],
 				this.$parent.product = {},
 				setTimeout(() => this.$refs.form.resetForm(), 100)
 

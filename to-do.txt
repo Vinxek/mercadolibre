@@ -62,4 +62,3 @@ Nowloading25
 windows.location.href
 swal delete confirmation
 crud categories
-fix category in produtcs
