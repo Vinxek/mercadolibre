@@ -41,6 +41,7 @@
 
 <script>
 import { Field, Form } from "vee-validate";
+import { successMessage, handlerErrors } from '@/helpers/Alerts.js'
 import * as yup from "yup";
 import axios from "axios";
 
@@ -85,6 +86,7 @@ export default {
 				if (this.is_create) {
 					await axios.post("/categories", this.category);
 					await Swal.fire("success", "Category Saved");
+					await successMessage({ reload: true })
 				} else {
 					await axios.put(`/categories/${this.category.id}`, this.category)
 					await Swal.fire("success", "Category Edited");

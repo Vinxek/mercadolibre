@@ -120,6 +120,7 @@
 <script>
 import { Field, Form } from 'vee-validate'
 import axios from 'axios';
+import { deleteMessage, successMessage } from '@/helpers/Alerts.js'
 import * as yup from "yup";
 export default {
 
@@ -184,10 +185,12 @@ export default {
 				const user = this.createFormData(this.user)
 				if (this.is_create) {
 					await axios.post("/users/store", user)
-					await Swal.fire("success", "Product Saved");
+					await successMessage({ reload: true })
+					window.location.href = '/users';
 				} else {
 					await axios.post(`/users/update/${this.user.id}`, user)
 					await Swal.fire("success", "Product Edited");
+					window.location.href = '/users';
 				}
 
 			} catch (error) {

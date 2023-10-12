@@ -26,8 +26,8 @@
 												<i class="fa-solid fa-pen" title="Edit"></i>
 											</button>
 											<form action="" method="post">
-												<button type="button" class="ms-2 btn btn-danger btn-sm" @click=""
-													title="delete">
+												<button type="button" class="ms-2 btn btn-danger btn-sm"
+													@click="deleteCategory(category)" title="delete">
 													<i class="fa-solid fa-trash-can"></i>
 												</button>
 											</form>
@@ -46,6 +46,7 @@
 
 <script>
 import CategoryModal from './CategoryModal.vue';
+import { deleteMessage, successMessage } from '@/helpers/Alerts.js'
 export default {
 
 	components: { CategoryModal },
@@ -79,9 +80,10 @@ export default {
 			this.openModal()
 		},
 		async deleteCategory({ id }) {
+			if (!await deleteMessage()) return
 			try {
 				await axios.delete(`/categories/${id}`)
-				window.location.reload()
+				await successMessage({ is_delete: true, reload: true })
 			} catch (error) {
 				console.error(error);
 			}

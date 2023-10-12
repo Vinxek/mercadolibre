@@ -107,6 +107,7 @@
 <script>
 import { Field, Form } from "vee-validate";
 import * as yup from "yup";
+import { successMessage, handlerErrors } from '@/helpers/Alerts.js'
 import axios from "axios";
 
 export default {
@@ -161,7 +162,7 @@ export default {
 				const product = this.createFormData(this.product)
 				if (this.is_create) {
 					await axios.post("/products/store", product);
-					await Swal.fire("success", "Product Saved");
+					await successMessage({ reload: true })
 				} else {
 					await axios.post(`/products/update/${this.product.id}`, product)
 					await Swal.fire("success", "Product Edited");

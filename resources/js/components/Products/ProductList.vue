@@ -72,6 +72,8 @@
 
 <script>
 import ProductModal from './ProductModal.vue' //import a child component then register on components below
+import { deleteMessage, successMessage } from '@/helpers/Alerts.js'
+
 export default {
 	//Any variable writting in here needs to have [this] example this.products
 	components: { ProductModal }, //component registration
@@ -114,9 +116,10 @@ export default {
 		},
 
 		async deleteProduct({ id }) {
+			if (!await deleteMessage()) return
 			try {
 				await axios.delete(`/products/${id}`)
-				window.location.reload()
+				await successMessage({ is_delete: true, reload: true })
 			} catch (error) {
 				console.error(error);
 			}

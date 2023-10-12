@@ -41,13 +41,15 @@
                                         <div class="d-flex">
                                             <a href="{{ route('users.edit', ['user' => $user->id]) }}"
                                                 class="btn btn-warning btn-sm"><i class="fa-solid fa-user-pen"></i></a>
-                                            <form action="{{ route('users.destroy', ['user' => $user->id]) }}"
+                                            <form id="deleteForm"
+                                                action="{{ route('users.destroy', ['user' => $user->id]) }}"
                                                 method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="ms-2 btn btn-danger btn-sm"><i
+                                                <button class="ms-2 btn btn-danger btn-sm" onclick="confirmDelete()"><i
                                                         class="fa-solid fa-trash-can"></i></button>
                                             </form>
+
                                         </div>
                                     </td>
                                 </tr>
